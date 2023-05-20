@@ -56,9 +56,6 @@ def extract_text(file: File):
 
 
 
-app = FastAPI()
-
-
 @app.get("/comparison")
 def get_comparison():
     pass
