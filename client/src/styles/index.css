@@ -63,7 +63,14 @@ body {
   align-items: center; }
 
 .caseForm {
-  margin: 50px 0px; }
+  margin: 50px 0px;
+  width: 80%;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--component);
+  border-radius: 20px; }
 
 .header {
   display: flex;
@@ -73,5 +80,22 @@ body {
   width: 100vw;
   background-color: var(--highlight);
   border-bottom: 1px solid var(--background); }
+
+.fileUploadSection {
+  display: flex;
+  justify-content: center;
+  align-items: space-evenly; }
+
+.uploadButton {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: var(--highlight-faded);
+  border-color: var(--highlight-faded);
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 1.1em 2.8em;
+  text-align: center;
+  margin: 10px; }
 
 /*# sourceMappingURL=index.css.map */
