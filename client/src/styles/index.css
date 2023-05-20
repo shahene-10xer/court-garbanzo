@@ -65,7 +65,7 @@ body {
 .caseForm {
   margin: 50px 0px;
   width: 80%;
-  padding: 100px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,9 +82,11 @@ body {
   border-bottom: 1px solid var(--background); }
 
 .fileUploadSection {
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: space-evenly; }
+  align-items: center; }
 
 .uploadButton {
   box-sizing: border-box;
@@ -97,5 +99,18 @@ body {
   padding: 1.1em 2.8em;
   text-align: center;
   margin: 10px; }
+
+.filenames {
+  display: grid;
+  column-gap: 50px;
+  width: 100%;
+  background: var(--background);
+  border-radius: 10px;
+  padding: 10px; }
+  .filenames .truncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
 
 /*# sourceMappingURL=index.css.map */
