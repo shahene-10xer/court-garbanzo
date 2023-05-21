@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import sendPdfData from "../Extract";
 
 function Form() {
   const { endpoint } = useParams();
@@ -9,33 +10,53 @@ function Form() {
   return (
     <div className="formBody">
       <h1>{title}: Case Information</h1>
-      <h2>Add Plaintiff Information</h2>
+      <PartyForm partyName={"Plaintiff"} />
+      <PartyForm partyName={"Defendant"} />
+      {/* TODO: Add API call */}
+      <button className="uploadButton" type="button">
+        <span>Summarise</span>
+      </button>
+    </div>
+  );
+}
+
+function PartyForm({ partyName }) {
+  return (
+    <div>
+      <h2>Add {partyName} Information</h2>
       <div className="caseForm">
-        <label>Plaintiff Name</label>
-        <input name="Plaintiff Name" />
+        <label>{partyName} Name</label>
+        <input name={partyName + " Name"} />
         <FileUpload />
       </div>
     </div>
   );
 }
 
+function readFile(file_event) {
+  if (window.FileReader) {
+    var file = file_event.target.files[0];
+    var reader = new FileReader();
+    if (file && file.type.match("pdf.*")) {
+      reader.readAsBinaryString(file);
+    }
+    reader.onloadend = async function (_) {
+      await sendPdfData(reader.result);
+    };
+  }
+}
+
 function FileUpload() {
   const fileInputField = useRef(null);
   const [files, setFiles] = useState({});
 
-  const addNewFiles = (newFiles) => {
-    for (let file of newFiles) {
-      files[file.name] = file;
-    }
-    return { ...files };
-  };
-
-  const handleNewFileUpload = (e) => {
-    const { files: newFiles } = e.target;
+  const handleNewFileUpload = (event) => {
+    const newFiles = event.target?.files;
     if (newFiles.length) {
-      let updatedFiles = addNewFiles(newFiles);
+      let updatedFiles = { ...newFiles, ...files };
       setFiles(updatedFiles);
     }
+    readFile(event);
   };
 
   const onClickUpload = () => {
@@ -55,10 +76,11 @@ function FileUpload() {
         accept="pdf"
         value=""
         type="file"
+        id="pdfUpload"
         hidden
         multiple
       />
-      <UploadedFilePreviews files={files}/>
+      <UploadedFilePreviews files={files} />
     </div>
   );
 }
