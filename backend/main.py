@@ -1,9 +1,11 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-import boto3
 import base64
-from fastapi.middleware.cors import CORSMiddleware
+import pprint
 
+import boto3
+import google.generativeai as palm
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -28,8 +30,10 @@ session = boto3.Session(
 # Create a Textract client
 textract_client = session.client('textract')
 
+
 class File(BaseModel):
     file_data: str  # Change the type to string
+
 
 @app.post('/extract-text')
 def extract_text(file: File):
@@ -55,10 +59,19 @@ def extract_text(file: File):
         return {'error': 'Text extraction failed'}
 
 
-
 @app.get("/comparison")
-def get_comparison():
-    pass
+def get_comparison(prompt: str):
+    models = [m for m in palm.list_models(
+    ) if 'generateText' in m.supported_generation_methods]
+    model = models[0].name
+    completion = palm.generate_text(
+        model=model,
+        prompt=prompt,
+        temperature=0,
+        # The maximum length of the response
+        max_output_tokens=800,
+    )
+    return completion.result
 
 
 @app.get("/summary")
@@ -69,6 +82,7 @@ def get_summary():
 @app.get("/response")
 def get_response():
     pass
+
 
 if __name__ == '__main__':
     import uvicorn
