@@ -72,10 +72,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .caseForm {
   margin: 50px 0px;
+  padding: 50px 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--component);
+  border-radius: 20px;
 }
 
 .header {
@@ -86,4 +94,40 @@ body {
   width: 100vw;
   background-color: var(--highlight);
   border-bottom: 1px solid var(--background);
+}
+
+.fileUploadSection {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploadButton {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: var(--highlight-faded);
+  border-color: var(--highlight-faded);
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 1.1em 2.8em;
+  text-align: center;
+  margin: 10px;
+}
+
+.filenames {
+  display: grid;
+  column-gap: 50px;
+  width: 100%;
+  background: var(--background);
+  border-radius: 10px;
+  padding: 10px;
+  .truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ }
 }
